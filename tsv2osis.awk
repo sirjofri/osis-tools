@@ -4,10 +4,20 @@ function crossref(str) {
 	return gensub(/\[\[([^\]]+)]([^\]]+)]/, "<reference osisRef=\"\\1\">\\2</reference>", "g", str);
 }
 
+function chap(str) {
+	return gensub(/.+\.(.+)\..+/, "\\1", "g", str);
+}
+
+function chapmark(str) {
+	return gensub(/(.+\..+)\..+/, "\\1", "g", str);
+}
+
 BEGIN {
 	FS="\t";
 	verse = "";
-	printedWord = 0;
+	firstchapter = 1;
+
+	printf("<p>\n");
 }
 
 /^\s*$/ {
@@ -15,12 +25,28 @@ BEGIN {
 }
 
 /.*/ {
-	printedWord = 0;
+	if ($1 != "") {
+		# first end last verse
+		if (verse != "")
+			printf "<verse eID=\"%s\"/>\n", verse;
+
+		lastchap = chap(verse);
+		thischap = chap($1);
+
+		# we entered a new chapter
+		if (lastchap < thischap) {
+			lastchapmark = chapmark(verse);
+			thischapmark = chapmark($1);
+			if (firstchapter == 0) {
+				printf "<chapter eID=\"%s\"/>", lastchapmark;
+			}
+			printf "<chapter sID=\"%s\" osisID=\"%s\">\n", thischapmark, thischapmark;
+			firstchapter = 0;
+		}
+	}
 
 	# print verse marker
 	if ($1 != "") {
-		if (verse != "")
-			printf "<verse eID=\"%s\"/>\n", verse;
 		verse = $1;
 		printf "<verse sID=\"%s\" osisID=\"%s\"/>\n", verse, verse;
 	}
@@ -33,7 +59,12 @@ BEGIN {
 
 	# print variants
 	if ($3 != "") {
-		printf "<note type=\"alternate\" osisRef=\"%s\">%s</note> ", verse, $3;
+		printf "<note type=\"alternate\" osisRef=\"%s\">%s</note>", verse, crossref($3);
+	}
+
+	# print footnotes
+	if ($5 != "") {
+		printf "<note type=\"study\" osisRef=\"%s\">%s</note>", verse, crossref($5);
 	}
 
 	# print crossrefs
@@ -41,12 +72,12 @@ BEGIN {
 		printf "<note type=\"crossReference\" osisRef=\"%s\">%s</note> ", verse, crossref($4);
 	}
 
-	# print footnotes
-	if ($5 != "") {
-		printf "<note type=\"study\" osisRef=\"%s\">%s</note> ", verse, crossref($5);
-	}
+	if ($3 != "" || $4 != "" || $5 != "")
+		printf " ";
 }
 
 END {
 	printf "<verse eID=\"%s\"/>\n", verse;
+	printf "</p>\n";
+	printf "<chapter eID=\"%s\"/>\n", chapmark(verse);
 }

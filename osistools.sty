@@ -1,0 +1,165 @@
+\NeedsTeXFormat{LaTeX2e}[2003/12/01]
+\ProvidesPackage{osistools}
+	[2019/05/25 v0.1 osistools]
+\RequirePackage{lettrine}
+\RequirePackage{perpage}
+\RequirePackage{zref-savepos}
+\RequirePackage{fancyhdr}
+\RequirePackage[colaction]{multicol}
+
+\makeatletter
+
+\setlength{\parskip}{0pt}
+\setlength{\columnsep}{0.5cm}
+\MakePerPage{footnote}
+
+\def\putmarginpar#1#2%
+{%
+	\zsavepos{#1}%
+	\ifthispageodd{%
+		\docolaction{%
+		%\ifnum20341273>\number\zposx{#1}%
+			\ifnum#2<10%
+				\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp +\oddsidemargin+2cm \relax#2}%
+			\else%
+				\ifnum#2>99%
+					\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp +\oddsidemargin+1.65cm \relax#2}%
+				\else%
+					\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp +\oddsidemargin+1.82cm \relax#2}%
+				\fi%
+			\fi%
+		}{}{%
+			%\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp +18.77cm \relax#2}%
+			\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp % to paper start
+			+\textwidth+1in+\oddsidemargin % to end of text
+			+5pt \relax#2}%
+		}%
+	}{% ifthispageodd
+		\docolaction{%
+		%\ifnum20341273>\number\zposx{#1}%
+			\ifnum#2<10%
+				\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp +\evensidemargin+2cm \relax#2}%
+			\else%
+				\ifnum#2>99%
+					\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp +\evensidemargin+1.65cm \relax#2}%
+				\else%
+					\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp +\evensidemargin+1.82cm \relax#2}%
+				\fi%
+			\fi%
+		}{}{%
+			%\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp +18.77cm \relax#2}%
+			\hbox to 0pt{\hskip\dimexpr-\zposx{#1}sp % to paper start
+			+\textwidth+1in+\evensidemargin % to end of text
+			+5pt \relax#2}%
+		}%
+	}%
+}%
+
+% use like: \newosisbook{Matt}{Matthew}
+\newcommand{\newosisbook}[2]{%
+	\expandafter\def\csname osis@book@#1\endcsname{#2}
+}
+
+% use like: \osisbook{Matt}
+\newcommand{\osisbook}[1]{%
+	\ifcsname osis@book@#1\endcsname
+		\expandafter\csname osis@book@#1\endcsname
+	\else
+		\PackageError{osistools}{%
+			Your chosen book "#1" does not exist
+		}{%
+			You must select an existing book or you need\MessageBreak
+			to define your book with \\newosisbook
+		}
+	\fi
+}
+
+\newosisbook{Gen}{Genesis}
+\newosisbook{Exod}{Exodus}
+\newosisbook{Lev}{Leviticus}
+\newosisbook{Num}{Numbers}
+\newosisbook{Deut}{Deuteronomy}
+
+\newosisbook{Josh}{Joshua}
+\newosisbook{Judg}{Judges}
+\newosisbook{Ruth}{Ruth}
+\newosisbook{1Sam}{1 Samuel}
+\newosisbook{2Sam}{2 Samuel}
+\newosisbook{1Kgs}{1 Kings}
+\newosisbook{2Kgs}{2 Kings}
+\newosisbook{1Chr}{1 Chronicles}
+\newosisbook{2Chr}{2 Chronicles}
+
+\newosisbook{Ezra}{Ezra}
+\newosisbook{Neh}{Nehemia}
+\newosisbook{Esth}{Esther}
+\newosisbook{Job}{Job}
+
+\newosisbook{Ps}{Psalms}
+\newosisbook{Prov}{Proverbs}
+
+\newosisbook{Eccl}{Ecclesiastes}
+\newosisbook{Song}{Song of Solomon}
+
+\newosisbook{Isa}{Isaiah}
+\newosisbook{Jer}{Jeremiah}
+\newosisbook{Lam}{Lamentations}
+\newosisbook{Ezek}{Ezekiel}
+\newosisbook{Dan}{Daniel}
+
+\newosisbook{Hos}{Hosea}
+\newosisbook{Joel}{Joel}
+\newosisbook{Amos}{Amos}
+\newosisbook{Obad}{Obadiah}
+\newosisbook{Jonah}{Jonah}
+\newosisbook{Mic}{Micah}
+\newosisbook{Nah}{Nahum}
+\newosisbook{Hab}{Habakkuk}
+\newosisbook{Zeph}{Zephaniah}
+\newosisbook{Hag}{Haggai}
+\newosisbook{Zech}{Zechariah}
+\newosisbook{Mal}{Maleachi}
+
+
+\newosisbook{Matt}{Matthew}
+\newosisbook{Mark}{Mark}
+\newosisbook{Luke}{Luke}
+\newosisbook{John}{John}
+\newosisbook{Acts}{Acts}
+
+\newosisbook{Rom}{Romans}
+\newosisbook{1Cor}{1 Corinthians}
+\newosisbook{2Cor}{2 Corinthians}
+\newosisbook{Gal}{Galatians}
+\newosisbook{Eph}{Ephesians}
+\newosisbook{Phil}{Philippians}
+\newosisbook{Col}{Colossians}
+\newosisbook{1Thess}{1 Thessalonians}
+\newosisbook{2Thess}{2 Thessalonians}
+\newosisbook{1Tim}{1 Timothy}
+\newosisbook{2Tim}{2 Timothy}
+\newosisbook{Titus}{Titus}
+\newosisbook{Phlm}{Philemon}
+\newosisbook{Heb}{Hebrews}
+\newosisbook{Jas}{James}
+\newosisbook{1Pet}{1 Peter}
+\newosisbook{2Pet}{2 Peter}
+\newosisbook{1John}{1 John}
+\newosisbook{2John}{2 John}
+\newosisbook{3John}{3 John}
+\newosisbook{Jude}{Jude}
+\newosisbook{Rev}{Revelation}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[C]{\leftmark}
+\setlength{\headsep}{4.6pt}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\renewcommand{\footnoterule}{%
+	\kern-3\p@
+	\hrule\@width \columnwidth
+	\kern2.6\p@}
+
+\makeatother
+\endinput
