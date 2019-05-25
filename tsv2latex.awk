@@ -20,6 +20,10 @@ function book(str) {
 	return gensub(/(.+)\..+\..+/, "\\1", "g", str);
 }
 
+function emph(str) {
+	return gensub(/\{/, "\\\\emph{", "g", str);
+}
+
 BEGIN {
 	FS="\t";
 	verse = "";
@@ -50,13 +54,13 @@ BEGIN {
 
 	# print word
 	if ($3 != "" || $4 != "" || $5 != "")
-		printf "%s\\footnote{%s -- ", $2, vmark(verse);
+		printf "%s\\footnote{%s -- ", emph($2), vmark(verse);
 	else
-		printf "%s ", $2;
+		printf "%s ", emph($2);
 
 	# print variants
 	if ($3 != "") {
-		printf "%s", $3;
+		printf "%s", emph($3);
 
 		if ($4 != "" || $5 != "")
 			printf "; ";
@@ -64,7 +68,7 @@ BEGIN {
 
 	# print crossrefs
 	if ($4 != "") {
-		printf "%s", crossref($4);
+		printf "%s", emph(crossref($4));
 
 		if ($5 != "")
 			printf "; ";
@@ -72,7 +76,7 @@ BEGIN {
 
 	# print footnotes
 	if ($5 != "") {
-		printf "%s", crossref($5);
+		printf "%s", emph(crossref($5));
 	}
 
 	if ($3 != "" || $4 != "" || $5 != "")

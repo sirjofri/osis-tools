@@ -12,6 +12,10 @@ function chapmark(str) {
 	return gensub(/(.+\..+)\..+/, "\\1", "g", str);
 }
 
+function emph(str) {
+	return gensub(/\{(.+)\}/, "<hi type=\"italic\">\\1</hi>", "g", str);
+}
+
 BEGIN {
 	FS="\t";
 	verse = "";
@@ -53,23 +57,23 @@ BEGIN {
 
 	# print word
 	if ($3 != "" || $4 != "" || $5 != "")
-		printf "%s", $2;
+		printf "%s", emph($2);
 	else
-		printf "%s ", $2;
+		printf "%s ", emph($2);
 
 	# print variants
 	if ($3 != "") {
-		printf "<note type=\"alternate\" osisRef=\"%s\">%s</note>", verse, crossref($3);
+		printf "<note type=\"alternate\" osisRef=\"%s\">%s</note>", verse, emph(crossref($3));
 	}
 
 	# print footnotes
 	if ($5 != "") {
-		printf "<note type=\"study\" osisRef=\"%s\">%s</note>", verse, crossref($5);
+		printf "<note type=\"study\" osisRef=\"%s\">%s</note>", verse, emph(crossref($5));
 	}
 
 	# print crossrefs
 	if ($4 != "") {
-		printf "<note type=\"crossReference\" osisRef=\"%s\">%s</note> ", verse, crossref($4);
+		printf "<note type=\"crossReference\" osisRef=\"%s\">%s</note> ", verse, emph(crossref($4));
 	}
 
 	if ($3 != "" || $4 != "" || $5 != "")
