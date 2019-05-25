@@ -74,6 +74,7 @@
 	\fi
 }
 
+% {{{
 \newosisbook{Gen}{Genesis}
 \newosisbook{Exod}{Exodus}
 \newosisbook{Lev}{Leviticus}
@@ -149,6 +150,87 @@
 \newosisbook{3John}{3 John}
 \newosisbook{Jude}{Jude}
 \newosisbook{Rev}{Revelation}
+% }}}
+
+\DeclareOption{de}{% {{{
+\newosisbook{Gen}{Genesis}
+\newosisbook{Exod}{Exodus}
+\newosisbook{Lev}{Leviticus}
+\newosisbook{Num}{Numbers}
+\newosisbook{Deut}{Deuteronomy}
+
+\newosisbook{Josh}{Josua}
+\newosisbook{Judg}{Richter}
+\newosisbook{Ruth}{Ruth}
+\newosisbook{1Sam}{1 Samuel}
+\newosisbook{2Sam}{2 Samuel}
+\newosisbook{1Kgs}{1 Könige}
+\newosisbook{2Kgs}{2 Könige}
+\newosisbook{1Chr}{1 Chronik}
+\newosisbook{2Chr}{2 Chronik}
+
+\newosisbook{Ezra}{Esra}
+\newosisbook{Neh}{Nehemia}
+\newosisbook{Esth}{Esther}
+\newosisbook{Job}{Hiob}
+
+\newosisbook{Ps}{Psalmen}
+\newosisbook{Prov}{Sprüche}
+
+\newosisbook{Eccl}{Prediger}
+\newosisbook{Song}{Hohelied}
+
+\newosisbook{Isa}{Jesaia}
+\newosisbook{Jer}{Jeremia}
+\newosisbook{Lam}{Klagelieder}
+\newosisbook{Ezek}{Hesekiel}
+\newosisbook{Dan}{Daniel}
+
+\newosisbook{Hos}{Hosea}
+\newosisbook{Joel}{Joel}
+\newosisbook{Amos}{Amos}
+\newosisbook{Obad}{Obadia}
+\newosisbook{Jonah}{Jona}
+\newosisbook{Mic}{Micha}
+\newosisbook{Nah}{Nahum}
+\newosisbook{Hab}{Habakkuk}
+\newosisbook{Zeph}{Zephania}
+\newosisbook{Hag}{Haggai}
+\newosisbook{Zech}{Sacharia}
+\newosisbook{Mal}{Maleachi}
+
+
+\newosisbook{Matt}{Matthäus}
+\newosisbook{Mark}{Markus}
+\newosisbook{Luke}{Lukas}
+\newosisbook{John}{Johannes}
+\newosisbook{Acts}{Apostelgeschichte}
+
+\newosisbook{Rom}{Römerbrief}
+\newosisbook{1Cor}{1 Korinther}
+\newosisbook{2Cor}{2 Korinther}
+\newosisbook{Gal}{Galater}
+\newosisbook{Eph}{Epheser}
+\newosisbook{Phil}{Philipper}
+\newosisbook{Col}{Kolosser}
+\newosisbook{1Thess}{1 Thessalonicher}
+\newosisbook{2Thess}{2 Thessalonicher}
+\newosisbook{1Tim}{1 Timotheus}
+\newosisbook{2Tim}{2 Timotheus}
+\newosisbook{Titus}{Titus}
+\newosisbook{Phlm}{Philemon}
+\newosisbook{Heb}{Hebräer}
+\newosisbook{Jas}{Jakobus}
+\newosisbook{1Pet}{1 Petrus}
+\newosisbook{2Pet}{2 Petrus}
+\newosisbook{1John}{1 Johannes}
+\newosisbook{2John}{2 Johannes}
+\newosisbook{3John}{3 Johannes}
+\newosisbook{Jude}{Judas}
+\newosisbook{Rev}{Offenbarung}
+} %}}}
+
+\ProcessOptions\relax
 
 \pagestyle{fancy}
 \fancyhead{}
@@ -163,3 +245,4 @@
 
 \makeatother
 \endinput
+% vim:set foldmethod=marker:
