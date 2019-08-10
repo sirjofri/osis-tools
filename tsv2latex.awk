@@ -40,7 +40,7 @@ BEGIN {
 		thischap = chap($1);
 
 		# we entered a new chapter
-		if (lastchap < thischap) {
+		if (lastchap != thischap) {
 			printf "\n\n\\markboth{\\osisbook{%s} %s}{\\osisbook{%s} %s}\\lettrine[findent=5pt,nindent=0pt]{%s}{}\n", book($1), thischap, book($1), thischap, thischap;
 			ast = "";
 		}
