@@ -35,21 +35,26 @@ BEGIN {
 
 /.*/ {
 	ast = "\\textasteriskcentered";
+	haschap = 0;
 	if ($1 != "") {
 		lastchap = chap(verse);
 		thischap = chap($1);
 
 		# we entered a new chapter
 		if (lastchap != thischap) {
-			printf "\n\n\\markboth{\\osisbook{%s} %s}{\\osisbook{%s} %s}\\lettrine[findent=5pt,nindent=0pt]{%s}{}\n", book($1), thischap, book($1), thischap, thischap;
+			printf "\n\n\\markboth{\\osisbook{%s} %s}{\\osisbook{%s} %s}\\lettrine[findent=5pt,nindent=0pt]{%s}{}\\ignorespaces\n", book($1), thischap, book($1), thischap, thischap;
 			ast = "";
+			haschap = 1;
 		}
 	}
 
 	# print verse marker
 	if ($1 != "") {
 		verse = $1;
-		printf "%s\\putmarginpar{%s}{%s}", ast, verse, vnum(verse);
+		if (!haschap)
+			printf "%s\\putmarginpar{%s}{%s}", ast, verse, vnum(verse);
+		else
+			printf "%s", ast;
 	}
 
 	# print word
